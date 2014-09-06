@@ -8,7 +8,7 @@ Can be used for educational purpose to show methods to design efficient heteroge
 This application uses MemQueue system to efficiently broadcasts small tasks between
 threads (workers). 
 
-Application can use SSE2, SSE4.2 Intel extensions and OpenCL. It is especially designed
+Application can use SSE2, SSE4.1 Intel extensions and OpenCL. It is especially designed
 for Radeon GPU's (likes Radeon HD7X00).
 
 Usage is simple:
@@ -21,3 +21,8 @@ Application can use two method to solve problem:
 - naive
 - hash (can handle hashes greater than GPU memory).
 
+Software requirements:
+- glibmm
+- cppunit for tests
+- popt
+- cl.hpp header for OpenCL
