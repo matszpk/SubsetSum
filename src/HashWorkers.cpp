@@ -661,12 +661,12 @@ void HashOpenCLWorker::runOnNormalHash()
     NodeSubset* nodes1 = new NodeSubset[workSize];
     NodeSubset* nodes2 = new NodeSubset[workSize];
     
-    kernel.setArg(1, sumChangesBuf);
+    kernel.setArg(1, sumChangesBuf());
     kernel.setArg(2, guint(controller->getNodeHashBits()));
-    kernel.setArg(3, hashBuffer);
-    kernel.setArg(4, hashListsBuffer);
+    kernel.setArg(3, hashBuffer());
+    kernel.setArg(4, hashListsBuffer());
     if (controller->isUseHashSubsets())
-        kernel.setArg(8, subsumsTblBuf);
+        kernel.setArg(8, subsumsTblBuf());
     
     cmdQueue1.enqueueWriteBuffer(findIndicesNumBuf1, CL_TRUE, 0UL, 4UL, &zero);
     cmdQueue1.enqueueWriteBuffer(findIndicesNumBuf2, CL_TRUE, 0UL, 4UL, &zero);
@@ -678,9 +678,9 @@ void HashOpenCLWorker::runOnNormalHash()
         if (curWorkSize1 != 0)
         {   // execute kernel
             kernel.setArg(0, guint(curWorkSize1));
-            kernel.setArg(5, workBuffer1);
-            kernel.setArg(6, findIndicesNumBuf1);
-            kernel.setArg(7, findIndicesBuf1);
+            kernel.setArg(5, workBuffer1());
+            kernel.setArg(6, findIndicesNumBuf1());
+            kernel.setArg(7, findIndicesBuf1());
             const gsize alignedWorkSize = ((curWorkSize1 + groupSize-1)/
                     groupSize)*groupSize;
             cmdQueue1.enqueueNDRangeKernel(kernel, cl::NDRange(0),
@@ -742,9 +742,9 @@ void HashOpenCLWorker::runOnNormalHash()
         if (curWorkSize2 != 0)
         {   // execute kernel
             kernel.setArg(0, guint(curWorkSize2));
-            kernel.setArg(5, workBuffer2);
-            kernel.setArg(6, findIndicesNumBuf2);
-            kernel.setArg(7, findIndicesBuf2);
+            kernel.setArg(5, workBuffer2());
+            kernel.setArg(6, findIndicesNumBuf2());
+            kernel.setArg(7, findIndicesBuf2());
             const gsize alignedWorkSize = ((curWorkSize2 + groupSize-1)/
                     groupSize)*groupSize;
             cmdQueue2.enqueueNDRangeKernel(kernel, cl::NDRange(0),
@@ -829,12 +829,12 @@ void HashOpenCLWorker::runOnBigHash()
     const gsize hashGroupSize = 1U<<(nodeHashBits-bigHashGroupBits);
         
     kernel.setArg(2, guint(bigHashGroupBits));
-    kernel.setArg(4, sumChangesBuf);
+    kernel.setArg(4, sumChangesBuf());
     kernel.setArg(5, nodeHashBits);
-    kernel.setArg(6, hashBuffer);
-    kernel.setArg(7, hashListsBuffer);
+    kernel.setArg(6, hashBuffer());
+    kernel.setArg(7, hashListsBuffer());
     if (controller->isUseHashSubsets())
-        kernel.setArg(11, subsumsTblBuf);
+        kernel.setArg(11, subsumsTblBuf());
     
     cmdQueue1.enqueueWriteBuffer(findIndicesNumBuf1, CL_TRUE, 0UL, 4UL, &zero);
     cmdQueue1.enqueueWriteBuffer(findIndicesNumBuf2, CL_TRUE, 0UL, 4UL, &zero);
@@ -870,9 +870,9 @@ void HashOpenCLWorker::runOnBigHash()
                 if (curWorkSize1 != 0)
                 {   // execute kernel
                     kernel.setArg(0, guint(curWorkSize1));
-                    kernel.setArg(8, workBuffer1);
-                    kernel.setArg(9, findIndicesNumBuf1);
-                    kernel.setArg(10, findIndicesBuf1);
+                    kernel.setArg(8, workBuffer1());
+                    kernel.setArg(9, findIndicesNumBuf1());
+                    kernel.setArg(10, findIndicesBuf1());
                     const gsize alignedWorkSize =
                             ((curWorkSize1 + groupSize-1)/groupSize)*groupSize;
                     cmdQueue1.enqueueNDRangeKernel(kernel, cl::NDRange(0),
@@ -943,9 +943,9 @@ void HashOpenCLWorker::runOnBigHash()
                 if (curWorkSize2 != 0)
                 {   // execute kernel
                     kernel.setArg(0, guint(curWorkSize2));
-                    kernel.setArg(8, workBuffer2);
-                    kernel.setArg(9, findIndicesNumBuf2);
-                    kernel.setArg(10, findIndicesBuf2);
+                    kernel.setArg(8, workBuffer2());
+                    kernel.setArg(9, findIndicesNumBuf2());
+                    kernel.setArg(10, findIndicesBuf2());
                     const gsize alignedWorkSize =
                             ((curWorkSize2 + groupSize-1)/groupSize)*groupSize;
                     cmdQueue2.enqueueNDRangeKernel(kernel, cl::NDRange(0),
@@ -1050,9 +1050,9 @@ void HashOpenCLWorker::runOnBigHash()
                 if (curWorkSize1 != 0)
                 {   // execute kernel
                     kernel.setArg(0, guint(curWorkSize1));
-                    kernel.setArg(8, workBuffer1);
-                    kernel.setArg(9, findIndicesNumBuf1);
-                    kernel.setArg(10, findIndicesBuf1);
+                    kernel.setArg(8, workBuffer1());
+                    kernel.setArg(9, findIndicesNumBuf1());
+                    kernel.setArg(10, findIndicesBuf1());
                     const gsize alignedWorkSize =
                             ((curWorkSize1 + groupSize-1)/groupSize)*groupSize;
                     cmdQueue1.enqueueNDRangeKernel(kernel, cl::NDRange(0),
@@ -1118,9 +1118,9 @@ void HashOpenCLWorker::runOnBigHash()
                 if (curWorkSize2 != 0)
                 {   // execute kernel
                     kernel.setArg(0, guint(curWorkSize2));
-                    kernel.setArg(8, workBuffer2);
-                    kernel.setArg(9, findIndicesNumBuf2);
-                    kernel.setArg(10, findIndicesBuf2);
+                    kernel.setArg(8, workBuffer2());
+                    kernel.setArg(9, findIndicesNumBuf2());
+                    kernel.setArg(10, findIndicesBuf2());
                     const gsize alignedWorkSize =
                             ((curWorkSize2 + groupSize-1)/groupSize)*groupSize;
                     cmdQueue2.enqueueNDRangeKernel(kernel, cl::NDRange(0),

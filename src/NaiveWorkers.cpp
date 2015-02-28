@@ -381,7 +381,7 @@ void NaiveOpenCLWorker::run()
     NodeSubset* nodes1 = new NodeSubset[workSize];
     NodeSubset* nodes2 = new NodeSubset[workSize];
     
-    kernel.setArg(1, sumChangesBuf);
+    kernel.setArg(1, sumChangesBuf());
     
     cmdQueue1.enqueueWriteBuffer(findIndicesNumBuf1, CL_TRUE, 0UL, 4UL, &zero);
     cmdQueue1.enqueueWriteBuffer(findIndicesNumBuf2, CL_TRUE, 0UL, 4UL, &zero);
@@ -393,9 +393,9 @@ void NaiveOpenCLWorker::run()
         if (curWorkSize1 != 0)
         {   // execute kernel
             kernel.setArg(0, guint(curWorkSize1));
-            kernel.setArg(2, workBuffer1);
-            kernel.setArg(3, findIndicesNumBuf1);
-            kernel.setArg(4, findIndicesBuf1);
+            kernel.setArg(2, workBuffer1());
+            kernel.setArg(3, findIndicesNumBuf1());
+            kernel.setArg(4, findIndicesBuf1());
             gsize alignedWorkSize = ((curWorkSize1 + groupSize-1)/groupSize)*groupSize;
             cmdQueue1.enqueueNDRangeKernel(kernel, cl::NDRange(0),
                    cl::NDRange(alignedWorkSize), cl::NDRange(groupSize),
@@ -455,9 +455,9 @@ void NaiveOpenCLWorker::run()
         if (curWorkSize2 != 0)
         {   // execute kernel
             kernel.setArg(0, guint(curWorkSize2));
-            kernel.setArg(2, workBuffer2);
-            kernel.setArg(3, findIndicesNumBuf2);
-            kernel.setArg(4, findIndicesBuf2);
+            kernel.setArg(2, workBuffer2());
+            kernel.setArg(3, findIndicesNumBuf2());
+            kernel.setArg(4, findIndicesBuf2());
             gsize alignedWorkSize = ((curWorkSize2 + groupSize-1)/groupSize)*groupSize;
             cmdQueue2.enqueueNDRangeKernel(kernel, cl::NDRange(0),
                    cl::NDRange(alignedWorkSize), cl::NDRange(groupSize),
