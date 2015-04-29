@@ -328,7 +328,7 @@ void NaiveOpenCLWorker::init(NaiveController* controller,
             std::make_pair((char*)NaiveKernel_cl, NaiveKernel_cl_len));
     clProgram = cl::Program(clContext, kernelSources);
     try
-    { clProgram.build(clDevices, "-O"); }
+    { clProgram.build(clDevices, ""); }
     catch(cl::Error& err)
     {
         std::string buildLog;

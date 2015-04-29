@@ -528,15 +528,15 @@ void HashOpenCLWorker::init(HashController* controller, cl::Platform& clPlatform
     try
     {
         if (!controller->isUseHashSubsets())
-            clProgram.build(clDevices, "-O");
+            clProgram.build(clDevices, "");
         else if (hashedNumbers <= 8)
-            clProgram.build(clDevices, "-O -DSUBSUMSTBL=8");
+            clProgram.build(clDevices, "-DSUBSUMSTBL=8");
         else if (hashedNumbers <= 16)
-            clProgram.build(clDevices, "-O -DSUBSUMSTBL=16");
+            clProgram.build(clDevices, "-DSUBSUMSTBL=16");
         else if (hashedNumbers <= 24)
-            clProgram.build(clDevices, "-O -DSUBSUMSTBL=24");
+            clProgram.build(clDevices, "-DSUBSUMSTBL=24");
         else
-            clProgram.build(clDevices, "-O -DSUBSUMSTBL=32");
+            clProgram.build(clDevices, "-DSUBSUMSTBL=32");
     }
     catch(cl::Error& err)
     {
